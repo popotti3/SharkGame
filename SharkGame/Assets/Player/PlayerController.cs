@@ -1,18 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class PlayerController : MonoBehaviour
 {
+    public float  moveSpeed = 2f;
+
+    private Rigidbody2D body;
+    private Master controls;
+    private Vector2 moveInput;
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        
+        body = GetComponent<Rigidbody2D>();
+        controls = new Master();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-           
+        controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
+    }
+    void Start()
+    {
+
+    }
+
+    
+    private void FixedUpdate()
+    {
+       Move();    
+       
+    }
+
+    private void Move()
+    {
+        moveInput = controls.player.Movement.ReadValue<Vector2>();
     }
 }
