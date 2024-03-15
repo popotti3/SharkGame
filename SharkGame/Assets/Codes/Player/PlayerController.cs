@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 
 public class PlayerController : MonoBehaviour
 {
+    public Transform gunTransform;
     public float  moveSpeed = 2f;
 
     private Rigidbody2D body;
@@ -56,10 +58,12 @@ public class PlayerController : MonoBehaviour
     private void Shoot()
     {
         if(controls.player.Fire.triggered){
-        Debug.Log("Laukaus Laukasu Laukaus");
-        GameObject bullet = BulletPoolManager.Instance.GetBullet();
-        bullet.transform.position = transform.position;
-        bullet.transform.rotation = transform.rotation;
+            GameObject bullet = BulletPoolManager.Instance.GetBullet();
+            if (bullet == null){
+                return;
+            }
+            bullet.transform.position = gunTransform.position;
+            bullet.transform.rotation = gunTransform.rotation;
         }
     }
 }
