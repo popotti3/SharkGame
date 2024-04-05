@@ -12,7 +12,13 @@ public class PlayerController : MonoBehaviour
     public Transform gunTransform;
     public float  moveSpeed = 2f;
 
+    public Sprite sideSprite;
+
+    public Sprite topSprite;
+
     private Rigidbody2D body;
+
+    private SpriteRenderer spriteRenderer;
     private Master controls;
     private Vector2 moveInput;
 
@@ -23,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         controls = new Master();
     }
 
@@ -58,6 +65,25 @@ public class PlayerController : MonoBehaviour
     void Update(){
         Shoot();
         Aim();
+        UpdateSpriteDirection();
+    }
+
+    private void UpdateSpriteDirection()
+    {
+       if(moveInput.sqrMagnitude > 0.1f)
+       {
+            if(Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y)){
+                spriteRenderer.sprite = sideSprite;
+                spriteRenderer.flipX = moveInput.x < 0;
+                spriteRenderer.flipY = false;
+            }
+            else{
+                spriteRenderer.sprite = topSprite;
+                spriteRenderer.flipY = moveInput.y < 0;
+                spriteRenderer.flipX = false;
+            }
+       }
+
     }
 
     private void Aim()

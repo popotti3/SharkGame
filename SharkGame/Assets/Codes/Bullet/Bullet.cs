@@ -6,9 +6,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField]
-    private float currentSpeed = 5f;
+    private float currentSpeed = 7f;
 
-private float lifespan = 2.5f;
+private float lifespan = 4.5f;
     private float lifeTimer;
     
     void OnEnable()
